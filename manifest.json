@@ -21,7 +21,5 @@
         "32": "./icons/dollar32.png",
         "48": "./icons/dollar48.png",
         "128": "./icons/dollar128.png"
-    },
-    "options_page": "options.html"
-    
+    }
   }
