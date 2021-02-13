@@ -6,11 +6,27 @@
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <div>
-            <p>Enter Ticker Symbol</p>
-            <input id="ticker" />
-            <a href="popup.html">Search</a>
-            <a href="configure.html">Configure</a>
+        <div class="container">
+            <div class="search">
+                <input
+                    id="ticker"
+                    type="text"
+                    class="search__input"
+                    placeholder="AAPL"
+                />
+                <button class="search__button">
+                    <svg class="search__icon">
+                        <use
+                            xlink:href="icons/sprite.svg#icon-magnifying-glass"
+                        ></use>
+                    </svg>
+                </button>
+            </div>
+            <hr class="bottom__border" />
+            <div class="bottom__menu">
+                <a href="popup.html">Search</a>
+                <a href="configure.html">Configure</a>
+            </div>
         </div>
     </body>
 </html>
