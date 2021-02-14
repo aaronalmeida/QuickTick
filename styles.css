@@ -3,13 +3,12 @@
 *::after {
     margin: 0;
     padding: 0;
-    box-sizing: inherit;
+    box-sizing: border-box;
 }
 
 html {
     box-sizing: border-box;
     font-size: 62.5%;
-    border-radius: 5px;
 }
 
 .container {
@@ -28,7 +27,6 @@ html {
     margin: 2rem 1rem 0rem 0rem;
     height: 3.5rem;
 
-    flex: 0 0 40%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,7 +48,6 @@ html {
 .search__input:focus {
     outline: none;
     width: 100%;
-    background-color: var(--color-grey-light-3);
 }
 
 .search__input::-webkit-input-placeholder {
@@ -78,3 +75,53 @@ html {
 }
 
 /* SEARCH END ------------------------------------------------ */
+
+/* BOTTOM MENU END ------------------------------------------------ */
+
+.bottom {
+    display: grid;
+    align-items: end;
+}
+
+.bottom__icon {
+    height: 2.75rem;
+    width: 2.75rem;
+    fill: darkgray;
+    transition: all 0.2s;
+}
+.bottom__menu {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+.bottom__home {
+    display: flex;
+    align-items: center;
+}
+.bottom__configure {
+    display: flex;
+    align-items: center;
+}
+
+.bottom__text {
+    text-decoration: none;
+    font-size: 1.4rem;
+    padding-left: 0.5rem;
+    color: darkgray;
+    transition: all 0.2s;
+}
+
+a {
+    text-decoration: none;
+}
+
+.bottom__home:hover .lighten {
+    color: black;
+    fill: black;
+}
+
+.bottom__configure:hover .lighten {
+    color: black;
+    fill: black;
+}

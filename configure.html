@@ -3,9 +3,24 @@
         <link rel="stylesheet" href="styles.css" />
         <script src="configure.js"></script>
     </head>
-    <body>
+    <body class="container">
         <textarea id="sites" name="sites" rows="4" cols="50"></textarea>
-        <a href="popup.html">Search</a>
-        <a href="configure.html">Configure</a>
+        <div class="bottom">
+            <hr class="bottom__border" />
+            <div class="bottom__menu">
+                <a class="bottom__home" href="popup.html">
+                    <svg class="bottom__icon lighten">
+                        <use xlink:href="icons/sprite.svg#icon-home3"></use>
+                    </svg>
+                    <p class="bottom__text lighten">QuickTick</p>
+                </a>
+                <a class="bottom__configure" href="configure.html">
+                    <svg class="bottom__icon lighten">
+                        <use xlink:href="icons/sprite.svg#icon-cog">
+                    </svg>
+                    <p class="bottom__text lighten">Configure</p>
+                </a>
+            </div>
+        </div>
     </body>
 </html>
