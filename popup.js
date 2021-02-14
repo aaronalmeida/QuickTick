@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded", documentEvents, false);
 
 function myAction(input) {
-    //console.log("input value is : " + input.value);
-    var sites = JSON.parse(localStorage["sites"]);
+    console.log("input value is : " + input.value);
+    var existingSites = JSON.parse(localStorage["existingSites"]);
     var i;
-    for (i = 0; i < sites.length; i++) {
+    for (i = 0; i < existingSites.length; i++) {
+        var obj = existingSites[i];
+        site = obj.text + input.value;
+        console.log(site);
         chrome.tabs.create({
-            url: sites[i] + input.value,
+            url: "https://www.google.com/",
         });
     }
 }
@@ -18,7 +21,6 @@ function hatsToRats() {
 
 function documentEvents() {
     const input = document.querySelector("#ticker");
-    console.log(input);
     input.addEventListener("keyup", function (e) {
         if (e.keyCode === 13) {
             myAction(document.getElementById("ticker"));
