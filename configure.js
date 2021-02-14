@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", documentEvents, false);
 
 function documentEvents() {
     addTags();
+
+    document.getElementById("list").addEventListener("change", getSelectValue);
+
     for (var i in map) {
         $("#list").append("<option value=" + i + ">" + i + "</option>");
     }
@@ -63,4 +66,4 @@ function removeTags(value) {
 
 var map = {};
 map["Finviz"] = "https://finviz.com/quote.ashx?t=";
-map["Yahoo"] = "https://finance.yahoo.com/quote/AAPL";
+map["Yahoo"] = "https://finance.yahoo.com/quote/";

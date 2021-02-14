@@ -9,7 +9,7 @@ function myAction(input) {
         site = obj.text + input.value;
         console.log(site);
         chrome.tabs.create({
-            url: "https://www.google.com/",
+            url: obj.text + input.value,
         });
     }
 }
