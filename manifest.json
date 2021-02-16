@@ -1,9 +1,9 @@
 {
-    "name": "Getting Started Example",
-    "description": "Build an Extension!",
-    "version": "1.0",
+    "name": "QuikTick",
+    "description": "Streamline your analysis!",
+    "version": "0.1",
     "manifest_version": 3,
-    "permissions": ["storage", "activeTab", "scripting", "tabs"],
+    "permissions": ["storage"],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
