@@ -44,19 +44,47 @@ function getSelectValue() {
     });
 }
 
-function addTags() {
-    chrome.storage.local.get("chosenSites", function (values) {
-        obj = values.chosenSites;
-        for (var name in obj) {
-            $(".taglist").append($("<span/>", { text: name }));
-        }
+async function addTags() {
+    let chosenSites = await getChosenSites();
+    for (var name in chosenSites) {
+        $(".taglist").append($("<span/>", { text: name }));
+    }
+}
+
+async function removeTags(value) {
+    let chosenSites = await getChosenSites();
+    delete chosenSites[value];
+    setChosenSites(chosenSites);
+}
+
+function getChosenSites() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get("chosenSites", function (result) {
+            if (Object.values(result) != undefined) {
+                resolve(result.chosenSites);
+            } else {
+                reject();
+            }
+        });
     });
 }
 
-function removeTags(value) {
-    chrome.storage.local.get("chosenSites", function (values) {
-        obj = values.chosenSites;
-        delete obj[value];
-        chrome.storage.local.set({ chosenSites: obj }, function () {});
+function setChosenSites(obj) {
+    chrome.storage.local.set({ chosenSites: obj }, function () {});
+}
+
+function getListOfSites() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get("listOfSites", function (result) {
+            if (Object.values(result) != undefined) {
+                resolve(result.listOfSites);
+            } else {
+                reject();
+            }
+        });
     });
+}
+
+function setListOfSites(obj) {
+    chrome.storage.local.set({ listOfSites: obj }, function () {});
 }
