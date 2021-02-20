@@ -1,51 +1,44 @@
 document.addEventListener("DOMContentLoaded", documentEvents, false);
 
 function documentEvents() {
-    addTags();
+    addNewSite();
+}
 
-    document.getElementById("list").addEventListener("change", getSelectValue);
+function addNewSite() {
+    document
+        .getElementById("addCustomDomain")
+        .addEventListener("click", async function () {
+            const name = document.getElementsByClassName("custom__name")[0]
+                .value;
+            const domain = document.getElementsByClassName("custom__domain")[0]
+                .value;
 
-    for (var i in map) {
-        $("#list").append("<option value=" + i + ">" + i + "</option>");
-    }
-    $("#tags").on("click", "span", function () {
-        var name = $(this).text();
-        removeTags(name);
-        $(this).remove();
+            let listOfSites = await getListOfSites();
+
+            alreadyAdded = name in listOfSites;
+            if (!alreadyAdded) {
+                listOfSites[name] = domain;
+                setListOfSites(listOfSites);
+            }
+        });
+}
+
+function cleanDomain() {}
+
+//-------------------------Getters and Setters------------------------------------//
+
+function getListOfSites() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get("listOfSites", function (result) {
+            if (Object.values(result) != undefined) {
+                resolve(result.listOfSites);
+            } else {
+                reject();
+            }
+        });
     });
 }
 
-function getSelectValue() {
-    var selectedValue = document.getElementById("list").value;
-    existingSites = JSON.parse(localStorage.getItem("existingSites")) || [];
-    alreadyAdded = !!existingSites.filter((x) => x.title === selectedValue)
-        .length;
-    if (!alreadyAdded) {
-        var entry = {
-            title: selectedValue,
-            text: map[selectedValue],
-        };
-        existingSites.push(entry);
-        localStorage.setItem("existingSites", JSON.stringify(existingSites));
-        $(".taglist").append($("<span/>", { text: entry.title }));
-    }
+function setListOfSites(obj) {
+    chrome.storage.local.set({ listOfSites: obj }, function () {});
 }
-
-function addTags() {
-    existingSites = JSON.parse(localStorage.getItem("existingSites")) || [];
-    for (var i = 0; i < existingSites.length; i++) {
-        var obj = existingSites[i];
-        $(".taglist").append($("<span/>", { text: obj.title }));
-    }
-}
-
-function removeTags(value) {
-    existingSites = JSON.parse(localStorage.getItem("existingSites")) || [];
-    existingSites = existingSites.filter((x) => x.title != value);
-    localStorage.setItem("existingSites", JSON.stringify(existingSites));
-    console.log(JSON.parse(localStorage.getItem("existingSites")));
-}
-
-var map = {};
-map["Finviz"] = "https://finviz.com/quote.ashx?t=";
-map["Yahoo"] = "https://finance.yahoo.com/quote/";

@@ -47,5 +47,3 @@
 //         textNode.parentNode.replaceChild(el, textNode);
 //     }
 // }
-
-console.log("hello");

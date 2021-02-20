@@ -10,9 +10,8 @@ chrome.runtime.onInstalled.addListener((details) => {
     map["Yahoo"] = "https://finance.yahoo.com/quote/";
 
     switch (reason) {
-        case "install" || "update":
+        case "install":
             console.log("New User installed the extension.");
-            console.log("hello");
             chrome.storage.local.set({ listOfSites: map }, function () {});
             chrome.storage.local.set({ chosenSites: map }, function () {});
             break;

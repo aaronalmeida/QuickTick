@@ -2,47 +2,34 @@ document.addEventListener("DOMContentLoaded", documentEvents, false);
 
 function documentEvents() {
     addTags();
+    removeTags();
+    renderList();
+}
 
+//-------------------------------Dropdown/Listing ------------------------------------//
+async function renderList() {
     document.getElementById("list").addEventListener("change", getSelectValue);
-
-    chrome.storage.local.get("listOfSites", function (values) {
-        obj = values.listOfSites;
-        for (var name in obj) {
-            $("#list").append(
-                "<option value=" + name + ">" + name + "</option>"
-            );
-        }
-    });
-    $("#tags").on("click", "span", function () {
-        var name = $(this).text();
-        removeTags(name);
-        $(this).remove();
-    });
+    let listOfSites = await getListOfSites();
+    for (var name in listOfSites) {
+        $("#list").append("<option value=" + name + ">" + name + "</option>");
+    }
 }
 
-function getSelectValue() {
+async function getSelectValue() {
     var selectedValue = document.getElementById("list").value;
-    chrome.storage.local.get("listOfSites", function (values) {
-        listOfSitesObj = values.listOfSites;
-        chrome.storage.local.get("chosenSites", function (values) {
-            chosenSitesObj = values.chosenSites;
-            alreadyAdded = selectedValue in chosenSitesObj;
-            console.log(alreadyAdded);
-            if (!alreadyAdded) {
-                chrome.storage.local.get("chosenSites", function (values) {
-                    chosenSitesObj = values.chosenSites;
-                    chosenSitesObj[selectedValue] =
-                        listOfSitesObj[selectedValue];
-                    chrome.storage.local.set(
-                        { chosenSites: chosenSitesObj },
-                        function () {}
-                    );
-                });
-                $(".taglist").append($("<span/>", { text: selectedValue }));
-            }
-        });
-    });
+
+    let listOfSites = await getListOfSites();
+    let chosenSites = await getChosenSites();
+
+    alreadyAdded = selectedValue in chosenSites;
+    if (!alreadyAdded) {
+        chosenSites[selectedValue] = listOfSites[selectedValue];
+        setChosenSites(chosenSites);
+        $(".taglist").append($("<span/>", { text: selectedValue }));
+    }
 }
+
+//-------------------------------Tag Manipulation------------------------------------//
 
 async function addTags() {
     let chosenSites = await getChosenSites();
@@ -51,11 +38,17 @@ async function addTags() {
     }
 }
 
-async function removeTags(value) {
-    let chosenSites = await getChosenSites();
-    delete chosenSites[value];
-    setChosenSites(chosenSites);
+async function removeTags() {
+    $("#tags").on("click", "span", async function () {
+        var name = $(this).text();
+        let chosenSites = await getChosenSites();
+        delete chosenSites[name];
+        setChosenSites(chosenSites);
+        $(this).remove();
+    });
 }
+
+//----------------------------Getters and Setters -------------------------------------------//
 
 function getChosenSites() {
     return new Promise((resolve, reject) => {
