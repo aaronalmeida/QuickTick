@@ -3,9 +3,12 @@
     "description": "Streamline your analysis!",
     "version": "0.1",
     "manifest_version": 3,
-    "permissions": ["storage"],
+    "permissions": ["storage", "scripting"],
+        "background": {
+        "service_worker": "background.js"
+      },
     "action": {
-        "default_popup": "popup.html",
+        "default_popup": "Popup/popup.html",
         "default_icon": {
             "16": "./icons/dollar16.png",
             "32": "./icons/dollar32.png",
